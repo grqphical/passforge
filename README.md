@@ -13,7 +13,7 @@ PassForge uses AES encryption to encrypt your stored passwords and a SHA256 hash
 
 2. Generate passwords
 
-   - Passwords can be generated using a variety of options
+   - Passwords can be generated with a custom length
    - Passwords are generated using the `OsRng` random number generator from the `rand` crate
 
 3. Access/Modify passwords in encrypted file
