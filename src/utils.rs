@@ -10,8 +10,8 @@ pub fn hex_to_bytes(hex: &str) -> Result<Vec<u8>> {
     hex::decode(hex).map_err(|e| format_err!("Error decoding hex: {}", e))
 }
 
-pub fn prompt_for_master_key() -> String {
-    print!("Type master password: ");
+pub fn prompt_for_master_key(prompt: &'static str) -> String {
+    print!("{}", prompt);
     std::io::stdout().flush().unwrap();
     let password = read_password().unwrap();
     return password;

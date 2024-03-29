@@ -32,6 +32,12 @@ enum Commands {
     },
     /// Lists all stored passwords
     List,
+    /// Gets a stored password
+    Get { name: String },
+    /// Removes a stored password
+    Remove { name: String },
+    /// Resets the master password
+    Reset,
 }
 
 fn main() {
@@ -43,5 +49,8 @@ fn main() {
             commands::store::store_password(&name, &password).unwrap()
         }
         Commands::List => commands::list::list_passwords(),
+        Commands::Get { name } => commands::get::get_password(&name),
+        Commands::Remove { name } => commands::remove::remove_password(&name),
+        Commands::Reset => commands::reset::reset_master_password(),
     }
 }
