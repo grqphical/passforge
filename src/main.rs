@@ -46,11 +46,26 @@ fn main() {
     match cli_args.command {
         Commands::Generate { length } => commands::generate::generate_password(length),
         Commands::Store { password, name } => {
-            commands::store::store_password(&name, &password).unwrap()
+            match commands::store::store_password(&name, &password) {
+                Ok(_) => {}
+                Err(e) => eprintln!("Error storing password: {}", e),
+            }
         }
-        Commands::List => commands::list::list_passwords(),
-        Commands::Get { name } => commands::get::get_password(&name),
-        Commands::Remove { name } => commands::remove::remove_password(&name),
-        Commands::Reset => commands::reset::reset_master_password(),
+        Commands::List => match commands::list::list_passwords() {
+            Ok(_) => {}
+            Err(e) => eprintln!("Error listing passwords: {}", e),
+        },
+        Commands::Get { name } => match commands::get::get_password(&name) {
+            Ok(_) => {}
+            Err(e) => eprintln!("Error getting password: {}", e),
+        },
+        Commands::Remove { name } => match commands::remove::remove_password(&name) {
+            Ok(_) => {}
+            Err(e) => eprintln!("Error removing password: {}", e),
+        },
+        Commands::Reset => match commands::reset::reset_master_password() {
+            Ok(_) => {}
+            Err(e) => eprintln!("Error resetting master password: {}", e),
+        },
     }
 }

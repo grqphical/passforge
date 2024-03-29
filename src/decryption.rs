@@ -33,6 +33,7 @@ pub fn read_password_database() -> Result<(HashMap<String, String>, String)> {
 
         if master_hash != entered_master_key_hash {
             println!("Incorrect master password");
+            return Ok((HashMap::new(), master_hash));
         }
 
         master_hash = entered_master_key_hash;
