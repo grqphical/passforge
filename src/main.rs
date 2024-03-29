@@ -1,7 +1,14 @@
 mod commands;
+mod decryption;
+mod encryption;
 mod hashing;
 
+const PASSWORD_DB_PATH: &str = "passwords.db";
+
+use std::io::Write;
+
 use clap::{Parser, Subcommand};
+use rpassword::read_password;
 
 #[derive(Parser, Debug)]
 struct CliArgs {
@@ -24,6 +31,14 @@ enum Commands {
         /// Password to store
         password: String,
     },
+    List,
+}
+
+fn prompt_for_master_key() -> String {
+    print!("Type master password: ");
+    std::io::stdout().flush().unwrap();
+    let password = read_password().unwrap();
+    return password;
 }
 
 fn main() {
@@ -34,5 +49,6 @@ fn main() {
         Commands::Store { password, name } => {
             commands::store::store_password(&name, &password).unwrap()
         }
+        Commands::List => commands::list::list_passwords(),
     }
 }
