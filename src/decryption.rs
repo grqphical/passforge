@@ -3,7 +3,7 @@ use std::{collections::HashMap, path::Path};
 use aes_gcm::{aead::Aead, Aes256Gcm, Key, KeyInit};
 use anyhow::{format_err, Result};
 
-use crate::{encryption::hex_to_bytes, PASSWORD_DB_PATH};
+use crate::{utils::hex_to_bytes, PASSWORD_DB_PATH};
 
 pub fn decrypt_data(data: &Vec<u8>, key: &String) -> Result<String> {
     let key_bytes = hex_to_bytes(key)?;

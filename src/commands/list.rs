@@ -1,5 +1,5 @@
-use super::store::check_key;
-use crate::{decryption::read_password_database, hashing::hash_key, prompt_for_master_key};
+use crate::utils::{check_key, prompt_for_master_key};
+use crate::{decryption::read_password_database, hashing::hash_key};
 
 pub fn list_passwords() {
     let (mut master_hash, new_master_key) = check_key();

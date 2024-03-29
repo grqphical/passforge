@@ -2,13 +2,10 @@ mod commands;
 mod decryption;
 mod encryption;
 mod hashing;
+mod utils;
+use clap::{Parser, Subcommand};
 
 const PASSWORD_DB_PATH: &str = "passwords.db";
-
-use std::io::Write;
-
-use clap::{Parser, Subcommand};
-use rpassword::read_password;
 
 #[derive(Parser, Debug)]
 struct CliArgs {
@@ -17,6 +14,7 @@ struct CliArgs {
 }
 
 #[derive(Subcommand, Debug)]
+#[command(version, about = "Simple CLI Password Manager", long_about = None)]
 enum Commands {
     /// Generates a password
     Generate {
@@ -24,6 +22,7 @@ enum Commands {
         #[arg(short, long, default_value_t = 12)]
         length: u8,
     },
+    /// Stores a password
     Store {
         /// Identifier for password
         name: String,
@@ -31,14 +30,8 @@ enum Commands {
         /// Password to store
         password: String,
     },
+    /// Lists all stored passwords
     List,
-}
-
-fn prompt_for_master_key() -> String {
-    print!("Type master password: ");
-    std::io::stdout().flush().unwrap();
-    let password = read_password().unwrap();
-    return password;
 }
 
 fn main() {
