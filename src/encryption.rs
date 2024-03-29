@@ -18,6 +18,7 @@ pub fn encrypt_string(key: &String, data: &String) -> Result<(Vec<u8>, Vec<u8>)>
     }
 }
 
+/// Encrypts and writes the password database to disk
 pub fn write_password_database(
     password_db: HashMap<String, String>,
     master_password: String,

@@ -22,6 +22,7 @@ pub fn decrypt_data(data: &Vec<u8>, key: &String) -> Result<String> {
     }
 }
 
+/// Reads and decrypts the password database from disk
 pub fn read_password_database() -> Result<(HashMap<String, String>, String)> {
     let (mut master_key, new_master_key) = check_key();
     if new_master_key == false {

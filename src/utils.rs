@@ -4,6 +4,7 @@ use std::{io::Write, path::Path};
 
 const KEY_FILE_PATH: &str = "MASTERKEY";
 
+/// Prompts the user for a master key
 pub fn prompt_for_master_key(prompt: &'static str) -> String {
     print!("{}", prompt);
     std::io::stdout().flush().unwrap();
@@ -11,6 +12,7 @@ pub fn prompt_for_master_key(prompt: &'static str) -> String {
     return password;
 }
 
+/// Converts a slice to a fixed size array
 pub fn slice_to_fixed_array<T: Copy + Default, const N: usize>(slice: &[T]) -> [T; N] {
     let mut array: [T; N] = [T::default(); N];
     let len = slice.len().min(N);
@@ -18,10 +20,17 @@ pub fn slice_to_fixed_array<T: Copy + Default, const N: usize>(slice: &[T]) -> [
     array
 }
 
+/// Prompts the user to create a master key
 fn prompt_for_master_key_creation() -> String {
     print!("Type master password: ");
     std::io::stdout().flush().unwrap();
     let password = read_password().unwrap();
+
+    // Keep the password under 32 chars to avoid issues with the encryption library (AES-256)
+    if password.len() < 8 || password.len() > 32 {
+        println!("Password must be at least 8 characters long and less than 32 characters long.");
+        return prompt_for_master_key_creation();
+    }
 
     loop {
         print!("Confirm Password: ");
